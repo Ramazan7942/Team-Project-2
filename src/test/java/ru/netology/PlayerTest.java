@@ -18,6 +18,61 @@ public class PlayerTest {
         int actual = player.sumGenre(game.getGenre());
         assertEquals(expected, actual);
     }
+   @Test
+    public void shouldSumGenreIfTwoGame() {
+        GameStore store = new GameStore();
+        Game game1 = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+        Game game2 = store.publishGame("Нетология Баттл Онлайн-2", "Аркады");
+        Player player = new Player("Petya");
+        player.installGame(game1);
+        player.installGame(game2);
+        player.play(game1, 3);
+        player.play(game2, 5);
+        int expected = 8;
+        int actual = player.sumGenre(game1.getGenre())+player.sumGenre(game2.getGenre());
+        assertEquals(expected, actual);
+    }
 
-    // другие ваши тесты
+
+
+    @Test
+    public void shouldFindMostPlayerByExistGenreGame() {
+        GameStore store = new GameStore();
+        Game game1 = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+        Game game2 = store.publishGame("Нетология Баттл Онлайн-2", "Аркады");
+        Game game3 = store.publishGame("Нетология Баттл Онлайн-3", "Аркады");
+        Game game4 = store.publishGame("Нетология Баттл Онлайн-4", "Аркады");
+        Player player = new Player("Petya");
+        player.installGame(game1);
+        player.installGame(game2);
+        player.installGame(game3);
+        player.installGame(game4);
+        player.play(game1, 3);
+        player.play(game2, 5);
+        player.play(game3, 8);
+        player.play(game4, 1);
+
+        assertEquals(game3, player.mostPlayerByGenre("Аркады"));
+    }
+    @Test
+    public void shouldFindMostPlayerByNotExistGenreGame() {
+        GameStore store = new GameStore();
+        Game game1 = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+        Game game2 = store.publishGame("Нетология Баттл Онлайн-2", "Аркады");
+        Game game3 = store.publishGame("Нетология Баттл Онлайн-3", "Аркады");
+        Game game4 = store.publishGame("Нетология Баттл Онлайн-4", "Аркады");
+        Player player = new Player("Petya");
+        player.installGame(game1);
+        player.installGame(game2);
+        player.installGame(game3);
+        player.installGame(game4);
+        player.play(game1, 3);
+        player.play(game2, 5);
+        player.play(game3, 8);
+        player.play(game4, 1);
+
+        assertEquals(null, player.mostPlayerByGenre("Бродилка"));
+    }
+
+
 }

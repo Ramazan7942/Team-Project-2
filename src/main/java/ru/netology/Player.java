@@ -12,16 +12,19 @@ public class Player {
     private Map<Game, Integer> playedTime = new HashMap<>();
 
     public Player(String name) {
+
         this.name = name;
     }
 
     public String getName() {
+
         return name;
     }
 
     /** добавление игры игроку
      если игра уже была, никаких изменений происходить не должно */
     public void installGame(Game game) {
+
         playedTime.put(game, 0);
     }
 
@@ -57,6 +60,7 @@ public class Player {
     /** Метод принимает жанр и возвращает игру этого жанра, в которую играли больше всего
      Если в игры этого жанра не играли, возвращается null */
     public Game mostPlayerByGenre(String genre) {
+
         return null;
     }
 }
