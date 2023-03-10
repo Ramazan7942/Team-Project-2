@@ -17,6 +17,7 @@ public class PlayerTest {
         player.installGame(game);
         assertTrue(store.containsGame(game));
     }
+
     @Test
     public void shouldInstallTwoGame() {
         GameStore store = new GameStore();
@@ -25,7 +26,7 @@ public class PlayerTest {
         Player player = new Player("Petya");
         player.installGame(game1);
         player.installGame(game2);
-        assertTrue(store.containsGame(game1)&& store.containsGame(game2));
+        assertTrue(store.containsGame(game1) && store.containsGame(game2));
     }
 
 
