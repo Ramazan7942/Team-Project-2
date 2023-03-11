@@ -39,7 +39,7 @@ public class PlayerTest {
         player.play(game, 3);
 
         int expected = 3;
-        int actual = player.sumGenre(game.getGenre());
+        int actual = player.sumGenre("Аркады");
         Assertions.assertEquals(expected, actual);
     }
 
@@ -54,7 +54,7 @@ public class PlayerTest {
         player.play(game1, 3);
         player.play(game2, 5);
         int expected = 8;
-        int actual = player.sumGenre(game1.getGenre()) + player.sumGenre(game2.getGenre());
+        int actual = player.sumGenre("Аркады");
         Assertions.assertEquals(expected, actual);
     }
 
