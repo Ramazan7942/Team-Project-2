@@ -17,21 +17,21 @@ public class Player {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Map<Game, Integer> getPlayedTime() {
-        return playedTime;
-    }
-
-    public void setPlayedTime(Map<Game, Integer> playedTime) {
-        this.playedTime = playedTime;
-    }
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public Map<Game, Integer> getPlayedTime() {
+//        return playedTime;
+//    }
+//
+//    public void setPlayedTime(Map<Game, Integer> playedTime) {
+//        this.playedTime = playedTime;
+//    }
 
     /**
      * добавление игры игроку
@@ -52,12 +52,10 @@ public class Player {
      */
     public int play(Game game, int hours) {
         game.getStore().addPlayTime(name, hours);
-        if (hours <= 0) {
-            throw new RuntimeException("Игровое время не может быть отрицательным или равным нулю!");
-        } else if (playedTime.containsKey(game)) {
+        if (playedTime.containsKey(game)) {
             playedTime.put(game, playedTime.get(game) + hours);
         } else {
-            throw new RuntimeException("У игрока " + this.name + " игра " + game + " не установлена!");
+            throw new RuntimeException("Игра не установлена");
         }
         return playedTime.get(game);
     }
