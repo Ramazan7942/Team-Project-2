@@ -9,25 +9,7 @@ import java.util.HashMap;
 
 public class PlayerTest {
 
-//    @Test
-//    public void shouldInstallOneGame() {
-//        GameStore store = new GameStore();
-//        Game game = store.publishGame("Нетология Баттл Онлайн", "Аркады");
-//        Player player = new Player("Petya");
-//        player.installGame(game);
-//        assertTrue(store.containsGame(game));
-//    }
 
-//    @Test
-//    public void shouldInstallTwoGame() {
-//        GameStore store = new GameStore();
-//        Game game1 = store.publishGame("Нетология Баттл Онлайн", "Аркады");
-//        Game game2 = store.publishGame("Нетология Баттл Онлайн-2", "Аркады");
-//        Player player = new Player("Petya");
-//        player.installGame(game1);
-//        player.installGame(game2);
-//        assertTrue(store.containsGame(game1) && store.containsGame(game2));
-//    }
 
 
     @Test
