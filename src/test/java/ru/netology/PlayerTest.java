@@ -1,11 +1,9 @@
 package ru.netology;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PlayerTest {
 
@@ -105,5 +103,3 @@ public class PlayerTest {
 
 
 }
-
-

@@ -1,291 +1,162 @@
+
 package ru.netology;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class GameStoreTest {
-    @Nested
-    @DisplayName("Тесты на список игр")
-    public class GameListTest {
-        GameStore storeEmpty = new GameStore();
-        GameStore storeOneGame = new GameStore();
-        GameStore storeSomeGames = new GameStore();
 
-        @BeforeEach
-        public void setup() {
-            storeOneGame.publishGame("Assassins creed", "Action");
-            storeSomeGames.publishGame("Witcher 3", "Action");
-            storeSomeGames.publishGame("The Elder Scrolls V: Skyrim", "Action");
-            storeSomeGames.publishGame("Kerbal Space Program", "Sandbox");
-            storeSomeGames.publishGame("Europe Universalis IV", "Strategy");
-            storeSomeGames.publishGame("XCOM 2", "Tactic");
-        }
+    GameStore store = new GameStore();
 
+    @Test
 
-        @Nested
-        @DisplayName("Тестирование метода publishGame()")
-        public class publishGameTests {
-            @Nested
-            @DisplayName("Пустой магазин")
-            public class EmptyStore {
-                @Test
-                public void shouldPublishGame() {
-                    List<Game> expected = new ArrayList<>();
-                    expected.add(new Game("Witcher 3", "Action", storeEmpty));
-                    storeEmpty.publishGame("Witcher 3", "Action");
-                    assertEquals(expected, storeEmpty.getGames());
-                }
-            }
+    public void shouldAddGame () { // 1. тест на проверку добавления одной игры
 
-            @Nested
-            @DisplayName("Магазин с одной игрой")
-            public class StoreWitnOneGame {
-                @Test
-                public void shouldPublishNewGame() {
-                    List<Game> expected = new ArrayList<>();
-                    expected.add(new Game("Witcher 3", "Action", storeOneGame));
-                    expected.add(new Game("Kerbal Space Program", "Sandbox", storeOneGame));
-                    storeOneGame.publishGame("Kerbal Space Program", "Sandbox");
-                    assertEquals(expected, storeOneGame.getGames());
-                }
+        Game game = store.publishGame("Нетология Баттл Онлайн", "Аркады");
 
-                @Test
-                public void shouldPublishOldGame() {
-                    //todo bug
-                    List<Game> expected = new ArrayList<>();
-                    expected.add(new Game("Assassins creed", "Action", storeOneGame));
-                    assertThrows(RuntimeException.class, () -> {
-                        storeOneGame.publishGame("Assassins creed", "Action");
-                    });
-                }
-            }
-
-            @Nested
-            @DisplayName("Магазин с несколькими играми")
-            public class StoreWithSomeGames {
-                @Test
-                public void shouldPublishNewGame() {
-                    List<Game> expected = new ArrayList<>();
-                    expected.add(new Game("Assassins creed", "Action", storeSomeGames));
-                    expected.add(new Game("The Elder Scrolls V: Skyrim", "Action", storeSomeGames));
-                    expected.add(new Game("Kerbal Space Program", "Sandbox", storeSomeGames));
-                    expected.add(new Game("Europe Universalis IV", "Strategy", storeSomeGames));
-                    expected.add(new Game("XCOM 2", "Tactic", storeSomeGames));
-                    expected.add(new Game("Grand Theft Auto V", "Action", storeSomeGames));
-                    storeSomeGames.publishGame("Grand Theft Auto V", "Action");
-                    assertEquals(expected, storeSomeGames.getGames());
-                }
-
-                @Test
-                public void shouldPublishOldGame() {
-                    List<Game> expected = new ArrayList<>();
-                    expected.add(new Game("Assassins creed", "Action", storeSomeGames));
-                    expected.add(new Game("The Elder Scrolls V: Skyrim", "Action", storeSomeGames));
-                    expected.add(new Game("Kerbal Space Program", "Sandbox", storeSomeGames));
-                    expected.add(new Game("Europe Universalis IV", "Strategy", storeSomeGames));
-                    expected.add(new Game("XCOM 2", "Tactic", storeSomeGames));
-                    assertThrows(RuntimeException.class, () -> {
-                        storeSomeGames.publishGame("Europe Universalis IV", "Strategy");
-                    });
-                }
-            }
-        }
-
-        @Nested
-        @DisplayName("Тестирование метода containsGame()")
-        public class containsGameTests {
-            @Nested
-            @DisplayName("Пустой магазин")
-            public class EmptyStore {
-                @Test
-                public void shouldUncontained() {
-                    assertFalse(storeEmpty.containsGame(new Game("Assassins creed", "Action", storeEmpty)));
-                }
-            }
-
-            @Nested
-            @DisplayName("Магазин с одной игрой")
-            public class StoreWitnOneGame {
-                @Test
-                public void shouldContained() {
-                    assertTrue(storeOneGame.containsGame(new Game("Assassins creed", "Action", storeOneGame)));
-                }
-
-                @Test
-                public void shouldUncontained() {
-                    assertFalse(storeOneGame.containsGame(new Game("Kerbal Space Program", "Sandbox", storeOneGame)));
-                }
-            }
-
-            @Nested
-            @DisplayName("Магазин с несколькими играми")
-            public class StoreWithSomeGames {
-                @Test
-                public void shouldContained() {
-                    assertTrue(storeSomeGames.containsGame(new Game("Kerbal Space Program", "Sandbox", storeSomeGames)));
-                }
-
-                @Test
-                public void shouldUncontained() {
-                    assertFalse(storeSomeGames.containsGame(new Game("Factorio", "Sandbox", storeSomeGames)));
-                }
-            }
-        }
+        assertTrue(store.containsGame(game));
     }
 
-    @Nested
-    @DisplayName("Тесты на кол-во игрового времени")
-    public class PlayTimeTests {
-        GameStore storeEmpty = new GameStore();
-        GameStore storeOnePlayer = new GameStore();
-        GameStore storeSomePlayers = new GameStore();
+    @Test
+    public void shouldAddTwoGames () { // 2. тест на проверку добавления двух игр
 
-        @BeforeEach
-        public void setup() {
-            storeOnePlayer.addPlayTime("Кодзима-Гений", 60);
-            storeSomePlayers.addPlayTime("Кодзима-Гений", 60);
-            storeSomePlayers.addPlayTime("Виталий", 50);
-            storeSomePlayers.addPlayTime("Никита", 40);
-            storeSomePlayers.addPlayTime("Юрий", 30);
-            storeSomePlayers.addPlayTime("Иван", 20);
-        }
+        Game game = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+        Game game2 = store.publishGame("Игра2", "Аркады");
 
-        //        @Disabled("Невозможно получить actual")
-        @Nested
-        @DisplayName("Тестирование метода addPlayTime()")
-        public class AddPlayTimeTests {
-            @Nested
-            @DisplayName("Магазин без игроков")
-            public class StoreEmptyTest {
+        assertTrue(store.containsGame(game2));
+    }
 
-                @Test
-                public void shouldAddPlayTime() {
-                    Map<String, Integer> expected = new HashMap<>();
-                    expected.put("Кодзима-Гений", 10);
-                    storeEmpty.addPlayTime("Кодзима-Гений", 10);
-                    assertEquals(expected, storeEmpty.getPlayedTime());
-                }
-            }
+    @Test
+    public void shouldNotContainsGame ()
+    { // 3. тест на проверку, покажет ли store игру, которая не была добавлена через метод publishGame
 
-            @Nested
-            @DisplayName("Один игрок")
-            public class StoreOnePlayerTests {
+        Game game = store.publishGame("Игра2", "Аркады");
+        Game game2 = new Game("Нетология Баттл Онлайн", "Аркады", store);
+        Game game3 = store.publishGame("Игра3", "Симуляция");
 
-                @Test
-                public void shouldAddPlayTimeNewPlayer() {
-                    Map<String, Integer> expected = new HashMap<>();
-                    expected.put("Кодзима-Гений", 60);
-                    expected.put("Никита", 10);
-                    storeOnePlayer.addPlayTime("Никита", 10);
-                    assertEquals(expected, storeOnePlayer.getPlayedTime());
-                }
+        assertFalse(store.containsGame(game2));
+    }
 
-                @Test
-                public void shouldAddPlayTimeOneOldPlayer() {
-                    Map<String, Integer> expected = new HashMap<>();
-                    expected.put("Кодзима-Гений", 70);
-                    storeOnePlayer.addPlayTime("Кодзима-Гений", 10);
-                    assertEquals(expected, storeOnePlayer.getPlayedTime());
-                }
-            }
+    @Test
+    public void shouldAddHoursIfOneHour () { // 4. тест на проверку добавления времени игры в 1 час
 
-            @Nested
-            @DisplayName("Несколько игроков")
-            public class StoreSomePlayerTests {
-                @Test
-                public void shouldAddPlayTimeNewPlayer() {
-                    Map<String, Integer> expected = new HashMap<>();
-                    expected.put("Кодзима-Гений", 60);
-                    expected.put("Виталий", 50);
-                    expected.put("Никита", 40);
-                    expected.put("Юрий", 30);
-                    expected.put("Иван", 20);
-                    expected.put("Владислав", 10);
-                    storeSomePlayers.addPlayTime("Владислав", 10);
-                    assertEquals(expected, storeSomePlayers.getPlayedTime());
-                }
+        store.addPlayTime("Игрок1", 1);
 
-                @Test
-                public void shouldAddPlayTimeOneOldPlayer() {
-                    Map<String, Integer> expected = new HashMap<>();
-                    expected.put("Кодзима-Гений", 60);
-                    expected.put("Виталий", 50);
-                    expected.put("Никита", 60);
-                    expected.put("Юрий", 30);
-                    expected.put("Иван", 20);
-                    storeSomePlayers.addPlayTime("Никита", 20);
-                    assertEquals(expected, storeSomePlayers.getPlayedTime());
-                }
+        String expected = "Игрок1";
+        String actual = store.getMostPlayer();
 
-                @Test
-                public void shouldAddPlayTimeExceptionNegativeValue() {
-                    assertThrows(RuntimeException.class, () -> {
-                        storeSomePlayers.addPlayTime("Юлия", -5);
-                    });
-                }
+        Assertions.assertEquals(expected, actual);
+    }
 
-                @Test
-                public void shouldAddPlayTimeExceptionZeroValue() {
-                    assertThrows(RuntimeException.class, () -> {
-                        storeSomePlayers.addPlayTime("Никита", 0);
-                    });
-                }
-            }
-        }
+    @Test
+    public void shouldNotShowAnyPlayer () { // 5. тест на проверку метода getMostPlayer, если игроки отсутствуют
 
-        @Nested
-        @DisplayName("Тесты на метод getMostPlayer")
-        public class GetMostPlayerTests {
-            @Nested
-            @DisplayName("Магазин без игроков")
-            public class StoreEmptyTest {
+        assertNull(store.getMostPlayer());
+    }
 
-                @Test
-                public void shouldGetMostPlayerNull() {
-                    assertNull(storeEmpty.getMostPlayer());
-                }
-            }
-        }
+    @Test
+    public void shouldNotAddHoursIfZero () { // 6. тест на проверку добавления времени игры ноль часов
 
-        @Nested
-        @DisplayName("Тесты на метод getSumPlayedTime()")
-        public class GetSumPlayedTimeTests {
-            @Nested
-            @DisplayName("Магазин без игроков")
-            public class StoreEmptyTest {
+        store.addPlayTime("Игрок1", 0);
 
-                @Test
-                public void shouldGetSumPlayedTime() {
-                    int expected = 0;
-                    assertEquals(expected, storeEmpty.getSumPlayedTime());
-                }
-            }
+        assertNull(store.getMostPlayer());
+    }
+    @Test
+    public void shouldNotAddHoursIfMinus () { // 7. тест на проверку добавления времени с отрицательным значением
 
-            @Nested
-            @DisplayName("Один игрок")
-            public class StoreOnePlayerTests {
-                @Test
-                public void shouldGetSumPlayedTime() {
-                    int expected = 60;
-                    assertEquals(expected, storeOnePlayer.getSumPlayedTime());
-                }
-            }
+        store.addPlayTime("Игрок1", -1);
 
-            @Nested
-            @DisplayName("Несколько игроков")
-            public class StoreSomePlayerTests {
-                @Test
-                public void shouldGetSumPlayedTime() {
-                    int expected = 200;
-                    assertEquals(expected, storeSomePlayers.getSumPlayedTime());
-                }
-            }
-        }
+        assertNull(store.getMostPlayer());
+    }
+
+    @Test
+    public void shouldAddHoursIfBigNumber () { // 8. тест на проверку добавления времени игры 999 999 часов
+
+        store.addPlayTime("Игрок1", 999_999);
+        store.addPlayTime("Игрок2", 100);
+        store.addPlayTime("Игрок3", 20);
+
+        String expected = "Игрок1";
+        String actual = store.getMostPlayer();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldAddHours () { // 9. тест на проверку добавления времени игры больше 1 часа
+
+        store.addPlayTime("Игрок1", 2);
+        store.addPlayTime("Игрок2", 3);
+
+        String expected = "Игрок2";
+        String actual = store.getMostPlayer();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldAddNewHours () { // 10. тест на проверку добавления нового времи для игры в которую уже играли
+
+        store.addPlayTime("Игрок1", 5);
+        store.addPlayTime("Игрок1", 6);
+        store.addPlayTime("Игрок2", 8);
+
+        String expected = "Игрок1";
+        String actual = store.getMostPlayer();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotAddNewHoursIfZero ()
+    { // 11. тест на проверку добавления времи равному нулю для игры в которую уже играли
+
+        store.addPlayTime("Игрок1", 5);
+        store.addPlayTime("Игрок1", 0);
+        store.addPlayTime("Игрок2", 6);
+
+        String expected = "Игрок2";
+        String actual = store.getMostPlayer();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldShowSumPlayedTimeIfOnePlayer ()
+    { // 12. тест на проверку общего количество времени проведенного за играми, если один игрок
+
+        store.addPlayTime("Игрок1", 5);
+
+        int expected = 5;
+        int actual = store.getSumPlayedTime();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldShowSumPlayedTime ()
+    { // 13. тест на проверку общего количество времени проведенного за играми, если игроков больше одного
+
+        store.addPlayTime("Игрок1", 5);
+        store.addPlayTime("Игрок2", 8);
+        store.addPlayTime("Игрок3", 0);
+
+        int expected = 13;
+        int actual = store.getSumPlayedTime();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldShowSumPlayedTimeIfZero ()
+    { // 14. тест на проверку, покажет ли метод getSumPlayedTime общее количество времени, если игроков нет
+
+        int expected = 0;
+        int actual = store.getSumPlayedTime();
+
+        Assertions.assertEquals(expected, actual);
     }
 }
