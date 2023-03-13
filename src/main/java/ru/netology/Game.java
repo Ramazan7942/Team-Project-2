@@ -14,14 +14,17 @@ public class Game {
     }
 
     public String getTitle() {
+
         return title;
     }
 
     public String getGenre() {
+
         return genre;
     }
 
     public GameStore getStore() {
+
         return store;
     }
 
