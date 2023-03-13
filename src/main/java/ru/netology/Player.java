@@ -15,12 +15,27 @@ public class Player {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public Map<Game, Integer> getPlayedTime() {
+//        return playedTime;
+//    }
+//
+//    public void setPlayedTime(Map<Game, Integer> playedTime) {
+//        this.playedTime = playedTime;
+//    }
 
-    /** добавление игры игроку
-     если игра уже была, никаких изменений происходить не должно */
+    /**
+     * добавление игры игроку
+     * если игра уже была, никаких изменений происходить не должно
+     */
+
     public void installGame(Game game) {
         if (!playedTime.containsKey(game)) {
         }
@@ -34,9 +49,9 @@ public class Player {
     public int play(Game game, int hours) {
         game.getStore().addPlayTime(name, hours);
         if (playedTime.containsKey(game)) {
-            playedTime.put(game, playedTime.get(game));
+            playedTime.put(game, playedTime.get(game) + hours);
         } else {
-            playedTime.put(game, hours);
+            throw new RuntimeException("Игра не установлена");
         }
         return playedTime.get(game);
     }
