@@ -6,14 +6,31 @@ import java.util.List;
 import java.util.Map;
 
 public class GameStore {
-    private List<Game> games = new ArrayList<>();
 
+    private List<Game> games = new ArrayList<>();
     /**
      * Информация о том, какой игрок сколько играл в игры этого каталога
      * Ключ - имя игрока
      * Значение - суммарное количество часов в игры этого каталога
      */
     private Map<String, Integer> playedTime = new HashMap<>();
+
+
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(List<Game> games) {
+        this.games = games;
+    }
+
+    public Map<String, Integer> getPlayedTime() {
+        return playedTime;
+    }
+
+    public void setPlayedTime(Map<String, Integer> playedTime) {
+        this.playedTime = playedTime;
+    }
 
     /**
      * Создание объекта игры с заданными заголовком и жанром
@@ -25,17 +42,15 @@ public class GameStore {
         return game;
     }
 
+
+
     /**
      * Проверяет наличие игры в каталоге и возврашает true
      * если игра есть и false иначе
      */
     public boolean containsGame(Game game) {
-        for (int i = 1; i < games.size(); i++) {
-            if (games.get(i - 1).equals(game)) {
-                return true;
-            }
-        }
-        return false;
+
+        return games.contains(game);
     }
 
     /**
@@ -45,7 +60,7 @@ public class GameStore {
      */
     public void addPlayTime(String playerName, int hours) {
         if (playedTime.containsKey(playerName)) {
-            playedTime.put(playerName, playedTime.get(playerName));
+            playedTime.put(playerName, playedTime.get(playerName)+hours);
         } else {
             playedTime.put(playerName, hours);
         }
@@ -56,7 +71,7 @@ public class GameStore {
      * времени. Если игроков нет, то возвращется null
      */
     public String getMostPlayer() {
-        int mostTime = 1;
+        int mostTime = 0;
         String bestPlayer = null;
         for (String playerName : playedTime.keySet()) {
             int playerTime = playedTime.get(playerName);
@@ -73,6 +88,11 @@ public class GameStore {
      * за играми этого каталога
      */
     public int getSumPlayedTime() {
-        return 0;
+       int  sumPlayedTime=0;
+        for (String playerName : playedTime.keySet()) {
+            sumPlayedTime = sumPlayedTime+playedTime.get(playerName);
+
+        }
+        return sumPlayedTime;
     }
 }
