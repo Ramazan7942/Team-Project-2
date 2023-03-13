@@ -6,31 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 public class GameStore {
-
     private List<Game> games = new ArrayList<>();
+
     /**
      * Информация о том, какой игрок сколько играл в игры этого каталога
      * Ключ - имя игрока
      * Значение - суммарное количество часов в игры этого каталога
      */
     private Map<String, Integer> playedTime = new HashMap<>();
-
-
-    public List<Game> getGames() {
-        return games;
-    }
-
-    public void setGames(List<Game> games) {
-        this.games = games;
-    }
-
-    public Map<String, Integer> getPlayedTime() {
-        return playedTime;
-    }
-
-    public void setPlayedTime(Map<String, Integer> playedTime) {
-        this.playedTime = playedTime;
-    }
 
     /**
      * Создание объекта игры с заданными заголовком и жанром
@@ -41,8 +24,6 @@ public class GameStore {
         games.add(game);
         return game;
     }
-
-
 
     /**
      * Проверяет наличие игры в каталоге и возврашает true
