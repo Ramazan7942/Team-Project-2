@@ -15,22 +15,11 @@ public class Player {
         this.name = name;
     }
 
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public Map<Game, Integer> getPlayedTime() {
-//        return playedTime;
-//    }
-//
-//    public void setPlayedTime(Map<Game, Integer> playedTime) {
-//        this.playedTime = playedTime;
-//    }
+    public String getName() {
+        return name;
+    }
 
+    
     /**
      * добавление игры игроку
      * если игра уже была, никаких изменений происходить не должно
