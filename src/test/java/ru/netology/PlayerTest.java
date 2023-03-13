@@ -1,46 +1,46 @@
 package ru.netology;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PlayerTest {
 
-//    @Test
-//    public void shouldInstallOneGame() {
-//        GameStore store = new GameStore();
-//        Game game = store.publishGame("Нетология Баттл Онлайн", "Аркады");
-//        Player player = new Player("Petya");
-//        player.installGame(game);
-//        assertTrue(store.containsGame(game));
-//    }
-
-//    @Test
-//    public void shouldInstallTwoGame() {
-//        GameStore store = new GameStore();
-//        Game game1 = store.publishGame("Нетология Баттл Онлайн", "Аркады");
-//        Game game2 = store.publishGame("Нетология Баттл Онлайн-2", "Аркады");
-//        Player player = new Player("Petya");
-//        player.installGame(game1);
-//        player.installGame(game2);
-//        assertTrue(store.containsGame(game1) && store.containsGame(game2));
-//    }
-
-
     @Test
-    public void shouldSumGenreIfOneGame() {
+    public void shouldPutTimeInInstalledGame() {
         GameStore store = new GameStore();
         Game game = store.publishGame("Нетология Баттл Онлайн", "Аркады");
-
         Player player = new Player("Petya");
         player.installGame(game);
         player.play(game, 3);
 
         int expected = 3;
-        int actual = player.sumGenre(game.getGenre());
+        int actual = player.sumGenre("Аркады");
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+
+    public void shouldThrowExceptionWhenGameNotInstalled() {
+
+        GameStore store = new GameStore();
+        Player player = new Player("Petya");
+        Game game = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+
+        assertThrows(RuntimeException.class, () -> player.play(game, 3));
+    }
+
+    @Test
+    public void shouldSumGenreIfOneGame() {
+        GameStore store = new GameStore();
+        Game game = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+        Player player = new Player("Petya");
+        player.installGame(game);
+        player.play(game, 3);
+
+        int expected = 3;
+        int actual = player.sumGenre("Аркады");
         Assertions.assertEquals(expected, actual);
     }
 
@@ -54,6 +54,7 @@ public class PlayerTest {
         player.installGame(game2);
         player.play(game1, 3);
         player.play(game2, 5);
+
         int expected = 8;
         int actual = player.sumGenre("Аркады");
         Assertions.assertEquals(expected, actual);
@@ -100,18 +101,6 @@ public class PlayerTest {
         Assertions.assertEquals(null, player.mostPlayerByGenre("Бродилка"));
     }
 
-    @Test
 
-    public void shouldThrowExceptionWhenGameNotInstalled() {
-
-        GameStore store = new GameStore();
-
-        Player player = new Player("Petya");
-
-        Game game = store.publishGame("Нетология Баттл Онлайн", "Аркады");
-
-        assertThrows(RuntimeException.class, () -> player.play(game, 3));
-    }
 }
-
 
